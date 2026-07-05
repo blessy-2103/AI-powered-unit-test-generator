@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TestLedger — AI-Powered Unit Test Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="grid-overlay" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">⎯|⎯</span>
+    <div class="brand-text">
+      <h1>TestLedger</h1>
+      <p>AI-powered unit test generation</p>
+    </div>
+  </div>
+  <div class="stats" id="statsBar">
+    <div class="stat">
+      <span class="stat-value" id="statTotal">0</span>
+      <span class="stat-label">tests logged</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value" id="statClasses">0</span>
+      <span class="stat-label">classes covered</span>
+    </div>
+  </div>
+  <div class="user-area">
+    <span class="user-badge" id="userBadge">—</span>
+    <button id="logoutBtn" class="btn-ghost">Log Out</button>
+  </div>
+</header>
+
+<main class="workspace">
+
+  <!-- INPUT PANE -->
+  <section class="pane input-pane">
+    <div class="pane-header">
+      <span class="pane-title">01 · Source</span>
+      <div class="pane-controls">
+        <select id="languageSelect" class="select">
+          <option value="Java" selected>Java</option>
+          <option value="Python">Python</option>
+          <option value="JavaScript">JavaScript</option>
+          <option value="C#">C#</option>
+        </select>
+        <select id="frameworkSelect" class="select">
+          <option value="JUnit 5" selected>JUnit 5</option>
+          <option value="Mockito + JUnit 5">Mockito + JUnit 5</option>
+          <option value="pytest">pytest</option>
+          <option value="Jest">Jest</option>
+          <option value="NUnit">NUnit</option>
+        </select>
+        <select id="testStyleSelect" class="select">
+          <option value="COMPREHENSIVE" selected>Comprehensive</option>
+          <option value="HAPPY_PATH">Happy Path Only</option>
+          <option value="EDGE_CASES">Exhaustive Edge Cases</option>
+          <option value="BOUNDARY_VALUES">Boundary Values</option>
+        </select>
+      </div>
+    </div>
+
+    <textarea id="sourceCodeInput" class="code-area" spellcheck="false"
+      placeholder="Paste your class or function here...
+
+Example:
+
+public class Calculator {
+    public int divide(int a, int b) {
+        if (b == 0) throw new ArithmeticException(&quot;Cannot divide by zero&quot;);
+        return a / b;
+    }
+}"></textarea>
+
+    <div class="input-footer">
+      <input type="text" id="classNameHint" class="text-input" placeholder="Class name (optional — auto-detected)" />
+      <button id="generateBtn" class="btn-primary">
+        <span id="generateBtnText">Generate Tests</span>
+        <span id="generateSpinner" class="spinner hidden"></span>
+      </button>
+    </div>
+  </section>
+
+  <!-- OUTPUT PANE -->
+  <section class="pane output-pane">
+    <div class="pane-header">
+      <span class="pane-title">02 · Generated Tests</span>
+      <div class="pane-controls">
+        <button id="copyBtn" class="btn-ghost" disabled>Copy</button>
+        <button id="downloadBtn" class="btn-ghost" disabled>Download</button>
+      </div>
+    </div>
+
+    <div id="outputEmpty" class="empty-state">
+      <p>No tests generated yet.</p>
+      <p class="empty-sub">Paste source code on the left and click <strong>Generate Tests</strong>.</p>
+    </div>
+
+    <pre id="outputCode" class="code-area output-code hidden"><code id="outputCodeContent"></code></pre>
+
+    <div id="errorBanner" class="error-banner hidden"></div>
+  </section>
+
+</main>
+
+<!-- LEDGER / HISTORY -->
+<section class="ledger">
+  <div class="ledger-header">
+    <span class="pane-title">03 · Ledger</span>
+    <input type="text" id="searchInput" class="text-input search-input" placeholder="Search by class name..." />
+  </div>
+  <div id="ledgerList" class="ledger-list">
+    <p class="empty-sub" id="ledgerEmpty">No entries yet. Generated tests will be logged here and saved to MySQL.</p>
+  </div>
+</section>
+
+<!-- ENTRY DETAIL MODAL -->
+<div id="modalOverlay" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modalTitle">Entry</h3>
+      <button id="modalClose" class="btn-ghost">Close</button>
+    </div>
+    <div class="modal-body">
+      <h4>Source</h4>
+      <pre class="code-area modal-code"><code id="modalSource"></code></pre>
+      <h4>Generated Tests</h4>
+      <pre class="code-area modal-code"><code id="modalTests"></code></pre>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Log In — TestLedger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="auth.css" />
+</head>
+<body>
+
+<div class="grid-overlay" aria-hidden="true"></div>
+
+<div class="auth-wrap">
+  <div class="auth-card">
+    <div class="auth-brand">
+      <span class="brand-mark">⎯|⎯</span>
+      <h1>TestLedger</h1>
+    </div>
+
+    <h2 class="auth-heading">Log In</h2>
+
+    <form id="loginForm">
+      <div class="auth-field">
+        <label for="username">Username</label>
+        <input type="text" id="username" autocomplete="username" required minlength="3" maxlength="50" />
+      </div>
+      <div class="auth-field">
+        <label for="password">Password</label>
+        <input type="password" id="password" autocomplete="current-password" required minlength="6" />
+      </div>
+      <div class="auth-links-row">
+        <a href="forgot-password.html">Forgot password?</a>
+      </div>
+      <button type="submit" class="auth-submit" id="submitBtn">Log In</button>
+      <div id="authError" class="auth-error hidden"></div>
+      <div id="authSuccess" class="auth-success hidden"></div>
+    </form>
+
+    <p class="auth-hint">New here? <a href="register.html">Create an account</a></p>
+  </div>
+</div>
+
+<script src="auth.js"></script>
+</body>
+</html>
