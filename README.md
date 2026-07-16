@@ -13,7 +13,7 @@ Paste source code in, get compilable unit tests out — powered by LLM reasoning
 [![JWT](https://img.shields.io/badge/Auth-JWT-000000?style=flat-square&logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](#license)
 
-[Overview](#overview) • [Features](#features) • [Architecture](#architecture) • [Getting Started](#getting-started) • [API Reference](#api-reference) • [Deployment](#deployment)
+[Overview](#overview) • [Features](#features) • [Architecture](#architecture) • [Getting Started](#getting-started) • [API Reference](#api-reference) 
 
 </div>
 
@@ -54,7 +54,7 @@ Built as an end-to-end demonstration of combining traditional backend engineerin
 | LLM | Groq API — OpenAI-compatible chat completions (`llama-3.3-70b-versatile`) |
 | Frontend | HTML5, CSS3, vanilla JavaScript (no framework) |
 | Build | Maven |
-| Deployment | Docker (multi-stage build), Railway / Render / any container host |
+
 
 ---
 
@@ -136,7 +136,6 @@ sequenceDiagram
 ```
 unit-test-generator/
 ├── pom.xml
-├── Dockerfile
 ├── sql/
 │   └── schema.sql
 ├── src/main/java/com/testgen/
@@ -224,9 +223,6 @@ Open **http://localhost:8080** — you'll land on the login page.
 | `DB_PASSWORD` | Yes (prod) | — | MySQL password |
 | `JWT_SECRET` | Yes (prod) | dev-only fallback | Signing key for JWTs, 32+ characters |
 | `JWT_EXPIRATION_MS` | No | `86400000` (24h) | Token lifetime |
-| `MAIL_HOST` / `MAIL_PORT` | No | `smtp.gmail.com` / `587` | SMTP server for reset emails |
-| `MAIL_USERNAME` / `MAIL_PASSWORD` | For reset emails | — | SMTP credentials (use a Gmail App Password, not your real password) |
-| `APP_BASE_URL` | No | `http://localhost:8080` | Used to build the link inside reset emails |
 | `PORT` | No | `8080` | Injected automatically by most cloud hosts |
 
 ---
@@ -290,50 +286,10 @@ Authorization: Bearer <token>
 
 ---
 
-## Deployment
-
-The frontend is served directly by Spring Boot, so only **one service** (plus MySQL) needs to be deployed.
-
-| Platform | Notes |
-|---|---|
-| **Railway** *(recommended)* | Detects the included `Dockerfile` automatically; add a MySQL plugin in the same project and reference its variables |
-| **Render** | Free web service tier; pair with an external MySQL host (e.g. Aiven) since Render's free tier has no MySQL |
-| **VPS / EC2** | Install Java + MySQL, set the same environment variables, run via `java -jar` or the provided `Dockerfile` |
-
-```bash
-# Local Docker sanity check
-docker build -t testledger .
-docker run -p 8080:8080 \
-  -e DB_URL="jdbc:mysql://host.docker.internal:3306/testgen_db?useSSL=false&serverTimezone=UTC" \
-  -e DB_USERNAME=root -e DB_PASSWORD=your_mysql_password \
-  -e GROQ_API_KEY=gsk_your_key -e JWT_SECRET=your_32_char_secret \
-  testledger
-```
-
-> Never commit real credentials. All secrets are read from environment variables with local-only fallback defaults.
-
----
 
 ## Testing
 
 A full manual test plan (44 test cases across Authentication, Test Generation, Ledger, Security, and Frontend/Usability) is maintained separately and covers scenarios including per-user data isolation, expired/tampered JWT handling, and reset-token reuse prevention.
-
----
-
-## Roadmap
-
-| Feature | Status |
-|---|---|
-| JWT authentication + per-user ledger | ✅ Done |
-| Forgot / reset password via email | ✅ Done |
-| Multiple test-style prompt variants | ✅ Done |
-| Email verification on signup | 🔜 Planned |
-| GitHub OAuth login | 🔜 Planned |
-| Streaming generation (SSE) | 🔜 Planned |
-| Self-critique / auto-refine pass on generated tests | 🔜 Planned |
-| Coverage estimate per test case | 🔜 Planned |
-| Rate limiting per user | 🔜 Planned |
-| Docker Compose (app + MySQL in one command) | 🔜 Planned |
 
 ---
 
