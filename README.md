@@ -36,7 +36,6 @@ Built as an end-to-end demonstration of combining traditional backend engineerin
 | **Core** | Multi-language support | Java, Python, JavaScript, C# — with matching frameworks (JUnit 5, pytest, Jest, NUnit, Mockito) |
 | **Core** | Persistent ledger | Every generated test is saved to MySQL with source code, timestamp, and metadata |
 | **Auth** | Register / Login / Logout | Stateless JWT authentication, BCrypt-hashed passwords |
-| **Auth** | Forgot / Reset password | Email-based password reset with expiring, single-use tokens |
 | **Auth** | Per-user data isolation | Each user's ledger only shows their own generated test cases |
 | **UX** | Searchable history | Filter past generations by class name in real time |
 | **UX** | Copy / Download | Export generated tests as a ready-to-paste file |
@@ -52,7 +51,6 @@ Built as an end-to-end demonstration of combining traditional backend engineerin
 | Backend | Java 17, Spring Boot 3.3 (Web, Data JPA, Validation, Security) |
 | Database | MySQL 8.x |
 | Auth | Spring Security + JJWT (JSON Web Tokens), BCrypt |
-| Email | Spring Mail (SMTP) for password reset links |
 | LLM | Groq API — OpenAI-compatible chat completions (`llama-3.3-70b-versatile`) |
 | Frontend | HTML5, CSS3, vanilla JavaScript (no framework) |
 | Build | Maven |
@@ -155,7 +153,7 @@ unit-test-generator/
 │   │   └── GlobalExceptionHandler.java
 │   ├── service/
 │   │   ├── AuthService.java
-│   │   ├── EmailService.java             # password reset emails
+│   │   ├── EmailService.java            # password reset emails
 │   │   ├── GroqService.java              # LLM prompt + response parsing
 │   │   ├── TestCaseService.java          # business logic + persistence
 │   │   └── UserDetailsServiceImpl.java
